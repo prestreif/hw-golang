@@ -35,9 +35,6 @@ func (lst *list) Back() *ListItem {
 }
 
 func (lst *list) pushFront(itm *ListItem) *ListItem {
-	// Если будет проблема со списком
-	lst.length++
-
 	// Если есть первый элемент, то нужно изменить связи
 	if lst.front != nil {
 		lst.front.Next = itm
@@ -50,9 +47,6 @@ func (lst *list) pushFront(itm *ListItem) *ListItem {
 }
 
 func (lst *list) pushBack(itm *ListItem) *ListItem {
-	// Если будет проблема со списком
-	lst.length++
-
 	// нужно изменить связи
 	lst.back.Prev = itm
 	//itm.Next = lst.back
@@ -68,6 +62,7 @@ func (lst *list) PushFront(v interface{}) *ListItem {
 	if lst.back == nil {
 		lst.back = itm
 	}
+	lst.length++
 	return lst.pushFront(itm)
 }
 
@@ -76,7 +71,7 @@ func (lst *list) PushBack(v interface{}) *ListItem {
 	if lst.front == nil {
 		return lst.PushFront(v)
 	}
-
+	lst.length++
 	return lst.pushBack(&ListItem{v, lst.back, nil})
 }
 
