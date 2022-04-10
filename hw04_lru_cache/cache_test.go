@@ -31,18 +31,21 @@ func TestCache(t *testing.T) {
 
 		val, ok := c.Get("aaa")
 		require.True(t, ok)
-		require.Equal(t, 100, val)
+		// Согласно интерфейса тут должен вернуться ListItem,
+		// так-как значение Hesh, насколько я понял
+		// если всё корректно то val нужно сравнивать так:
+		require.Equal(t, 100, val.(*ListItem).Value.(cacheItem).value)
 
 		val, ok = c.Get("bbb")
 		require.True(t, ok)
-		require.Equal(t, 200, val)
+		require.Equal(t, 200, val.(*ListItem).Value.(cacheItem).value)
 
 		wasInCache = c.Set("aaa", 300)
 		require.True(t, wasInCache)
 
 		val, ok = c.Get("aaa")
 		require.True(t, ok)
-		require.Equal(t, 300, val)
+		require.Equal(t, 300, val.(*ListItem).Value.(cacheItem).value)
 
 		val, ok = c.Get("ccc")
 		require.False(t, ok)
@@ -50,7 +53,31 @@ func TestCache(t *testing.T) {
 	})
 
 	t.Run("purge logic", func(t *testing.T) {
-		// Write me
+		c := NewCache(5)
+
+		c.Set("test1", 1)
+		c.Set("test2", 2)
+		c.Set("test3", 3)
+
+		_, ok := c.Get("test1")
+		require.True(t, ok)
+
+		_, ok = c.Get("test2")
+		require.True(t, ok)
+
+		_, ok = c.Get("test3")
+		require.True(t, ok)
+
+		c.Clear()
+
+		_, ok = c.Get("test1")
+		require.False(t, ok)
+
+		_, ok = c.Get("test2")
+		require.False(t, ok)
+
+		_, ok = c.Get("test3")
+		require.False(t, ok)
 	})
 }
 
