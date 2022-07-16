@@ -98,5 +98,5 @@ func getValFromFile(path string) (string, error) {
 		env.WriteByte(buff[0])
 	}
 
-	return strings.TrimRight(env.String(), " \t\n"), nil
+	return strings.Trim(env.String(), " \t\n"), nil
 }
