@@ -17,7 +17,7 @@ func TestReadDir(t *testing.T) {
 		{"testdata/env", 5, "", EnvValue{}},
 		{"", 0, "BAR", EnvValue{"bar", false}},
 		{"", 0, "EMPTY", EnvValue{"", false}},
-		{"", 0, "FOO", EnvValue{"foo\nwithnewline", false}},
+		{"", 0, "FOO", EnvValue{"   foo\nwith new line", false}},
 		{"", 0, "HELLO", EnvValue{"\"hello\"", false}},
 		{"", 0, "UNSET", EnvValue{"", true}},
 	}
