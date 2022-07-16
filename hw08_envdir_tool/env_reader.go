@@ -87,9 +87,9 @@ func getValFromFile(path string) (string, error) {
 		}
 
 		// If symbol which one ' ', '\t' that continue
-		// if buff[0] == ' ' || buff[0] == '\t' {
-		// 	continue
-		// }
+		if buff[0] == ' ' || buff[0] == '\t' {
+			continue
+		}
 		// If symbol equal \x00 that need to insert \n
 		if buff[0] == '\x00' {
 			buff[0] = '\n'
@@ -98,5 +98,5 @@ func getValFromFile(path string) (string, error) {
 		env.WriteByte(buff[0])
 	}
 
-	return strings.Trim(env.String(), " \t\n"), nil
+	return strings.TrimRight(env.String(), " \t\n"), nil
 }
